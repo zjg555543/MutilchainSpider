@@ -1,6 +1,6 @@
 <?php
 
-include 'MySQLDB.class.php';
+require_once 'MySQLDB.class.php';
 
 /**
  * 基础模型类，用来封装所有模型的公共属性和方法
@@ -58,6 +58,8 @@ abstract class Model {
         //拼接字符串
         $table = $this->getTable();
         $sql = "insert into `{$table}` ({$fields_str}) values ($values_str)";
+        
+        echo $sql;
         return $this->db->query($sql);
     }
 
@@ -80,6 +82,8 @@ abstract class Model {
                 }, $fields);
         $fields = implode(',', $fields);
         $sql = "update `{$table}` set {$fields} where `{$pk}`=$data[$pk]";
+        
+        //echo $sql;
         return $this->db->query($sql);
     }
 

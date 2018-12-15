@@ -1,43 +1,36 @@
 <?php
 
-include 'Model.class.php';
+require_once 'Model.class.php';
+require_once 'HttpClient.class.php';
 
 class ChainCountModel extends Model{
-    /*
-     * 通过用户名和密码获取用户信息
-     * @param $username string 用户名
-     * @param $pwd string 密码
-     * @return array 用户的信息
-     */
-    public function getAdminByUserNameAndPwd($username,$pwd){
-        $username=  mysql_real_escape_string($username);    //防止SQL注入
-        $pwd=md5($pwd); //将密码进行md5加密 
-        $sql="select * from admin where name='$username' and pwd='$pwd'";
-        return $this->db->fetchRow($sql);   //返回用户信息
-    }
-    /*
-     * 通过cookie获取用户信息
-     */
-    public function getAdminByCookie(){
-        if(!isset($_COOKIE['id']) || !isset($_COOKIE['pwd']) || isset($_SERVER["HTTP_REFERER"])){
-            return false;
+    public function getChainCount(){
+        $sql="select * from chaincount where id=1";
+        if($info =  $this->db->fetchRow($sql)){
+            return $info["child_chain_count"];
         }
-        $id=  mysql_real_escape_string($_COOKIE['id']);
-        $pwd=$_COOKIE['pwd'];
-        $sql="select * from admin where id=$id";
-        if($info=  $this->db->fetchRow($sql)){
-            return md5($info['name'].$info['pwd'].$GLOBALS['config']['app']['key'])==$pwd?$info:false;
+        return -1;
+    }
+    
+    public function onTimer(){
+        $client = new HttpClient('childChainCount');
+        $result = $client->getMessage();
+        if($result->error_code != 0){
+            return FALSE;
         }
-        return false;
+        
+        $this->updateChainCount($result->result->childChainCount->value);
+        return TRUE;
     }
-    /*
-     * 登录成功后，更新登陆信息
-     */
-    public function updateLoginInfo(){
-        $ip=  ip2long($_SERVER['REMOTE_ADDR']);
-        $time=time();
-        $id=$_SESSION['admin']['id'];
-        $sql="update admin set last_login_ip=$ip,last_login_time=$time where id=$id";
-        return $this->db->query($sql);
+    
+    private function updateChainCount($count_num){
+        $data["id"] = 1;
+        $data["child_chain_count"] = $count_num;
+        
+        $this->update($data);
+        var_dump($data);
+        echo '<br>'.__FUNCTION__.' OK<br>';
+        return;
     }
+    
 }
