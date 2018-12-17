@@ -12,43 +12,27 @@ class MainChainInfoModel extends Model{
     }
     
     public function OnTimer(){
-        if($this->GetChainCount() <= 0){
-            $this->updateMainChainContract();
-        }
+        $this->updateMainChainInfo();
         
-        $this->updateChainCount();
- 
+        echo ('Update MainChainInfoModel OK<br>');
         return TRUE;
     }
     
-    private function updateChainCount(){
+    private function updateMainChainInfo(){
+        
         $result = $this->getHttpResult('childChainCount');
         if($result->error_code != 0){
             return FALSE;
         }
         
-        $data["id"] = 1;
-        $data["child_chain_count"] = $result->result->childChainCount->value;
-        
-        $this->update($data);
-        var_dump($data);
-        echo '<br>'.__FUNCTION__.' OK<br>';
-        return;
-    }
-    
-    private function updateMainChainContract(){
-        $result = $this->getHttpResult('childChainCount');
-        if($result->error_code != 0){
-            return FALSE;
-        }
-        
+        $this->del(1);
+
         $data["id"] = 1;
         $data["contract_address"] = $GLOBALS['config']['chain_server']['cmc_address'];
         $data["contract_code"] = 'hello, contract..';
+        $data["child_chain_count"] = $result->result->childChainCount->value;
         
-        $this->update($data);
-        var_dump($data);
-        echo '<br>'.__FUNCTION__.' OK<br>';
+        $this->insert($data);
         return;
     }
     

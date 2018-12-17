@@ -6,29 +6,40 @@ class DepositInfoModel extends Model{
         for($i = 1; $i <= $child_count; $i++){
             $this->updateDepositInfo($i);
         }
-        
+        echo ('Update DepositInfoModel OK<br>');
         return TRUE;
     }
     
-    private function updateDepositInfo($chain_id){
+    public function GetChainDepositInfo(){
+        $deposit_obj_array = $this->select();
+        if($deposit_obj_array == null){
+            return null;
+        }
+        
+        $chain_deposit_array = array();
+        foreach ($deposit_obj_array as $index => $deposit_data) {
+            $ojb = json_decode($deposit_data["chain_deposit_data"]);
+            $chain_deposit_array[$ojb->chain_id] = $ojb->seq;
+        }
+        
+        return $chain_deposit_array;
+    }
+
+        private function updateDepositInfo($chain_id){
         if($chain_id <= 0){
             return;
         }
         
-        echo ('<br>--------------<br>chain_id:'.$chain_id.'<br>');
         //1.请求HTTP
         $key = 'deposit_'.$chain_id;
         $result = $this->getHttpResult($key);
         if($result->error_code != 0){
-            die('Canot find deposit_'.$chain_id);
             return FALSE;
         }
-         echo ('<br>----------22---<br>chain_id:'.$chain_id.'<br>');
         //2.插入记录
         $this->del($chain_id);
         $data['chain_id'] = $chain_id;
         $data['chain_deposit_data'] = $result->result->$key->value;
-         echo ('<br>---33-----------<br>chain_id:'.$chain_id.'<br>');
         $this->insert($data);
     }
 }

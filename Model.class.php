@@ -58,9 +58,6 @@ abstract class Model {
         //拼接字符串
         $table = $this->getTable();
         $sql = "insert into `{$table}` ({$fields_str}) values ($values_str)";
-        echo '---------------------<br>';
-        echo $sql;
-        echo '---------------------<br>';
         return $this->db->query($sql);
     }
 

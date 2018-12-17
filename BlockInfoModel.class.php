@@ -6,7 +6,7 @@ class BlockInfoModel extends Model{
         foreach ($child_chain_array as $chain_id => $chain_obj) {
             $this->updateChildChainBlock($chain_id, $chain_obj['chain_max_seq'], $chain_obj['leder_hash']);
         }
-        
+        echo ('Update BlockInfoModel OK<br>');
         return TRUE;
     }
     
@@ -15,10 +15,8 @@ class BlockInfoModel extends Model{
             return;
         }
         
-        echo ('<br>--------------<br>chain_id:'.$chain_id.'<br>chain max seq:'.$chain_seq.'<br>--------------<br>');
         //1、获取数据库中是否存在该区块
         $sql = "select * from blockinfo where chain_id={$chain_id} and chain_block_seq=$chain_seq";
-        echo $sql;
         $row = $this->db->fetchRow($sql);
         //2.如果已经存在，则不处理
         if($row != null){
