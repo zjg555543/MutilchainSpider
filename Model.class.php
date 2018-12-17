@@ -58,8 +58,9 @@ abstract class Model {
         //拼接字符串
         $table = $this->getTable();
         $sql = "insert into `{$table}` ({$fields_str}) values ($values_str)";
-        
+        echo '---------------------<br>';
         echo $sql;
+        echo '---------------------<br>';
         return $this->db->query($sql);
     }
 
@@ -152,4 +153,10 @@ abstract class Model {
         return $this->db->fetchColumn($sql);
     }
 
+     public function getHttpResult($input_key){
+        $url = 'http://'.$GLOBALS['config']['chain_server']['ip_port'].'/getSystemAccountMetaData?address='.$GLOBALS['config']['chain_server']['cmc_address'].'&key='.$input_key;
+        $html = file_get_contents($url);
+        //echo $html;
+        return json_decode($html);
+    }
 }
