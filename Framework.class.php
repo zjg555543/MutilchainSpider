@@ -8,6 +8,8 @@ require_once 'ChainInfoModel.class.php';
 require_once 'BlockInfoModel.class.php';
 require_once 'DepositInfoModel.class.php';
 require_once 'DepositHistoryModel.class.php';
+require_once 'WithdrawalInfoModel.class.php';
+require_once 'WithdrawalHistoryModel.class.php';
 require_once 'ChangeValidatorHistoryModel.class.php';
 
 class Framework{
@@ -27,6 +29,15 @@ class Framework{
         $deposit_info->OnTimer($chain_count);
         $chain_deposit_array = $deposit_info->GetChainDepositInfo();
      
+        $deposit_info_history = new DepositHistoryModel();
+        $deposit_info_history->OnTimer($chain_deposit_array);
+        
+        //待测试
+        $withdrawal_info = new WithdrawalInfoModel();
+        $withdrawal_info->OnTimer($chain_count);
+        $chain_withdrawal_array = $withdrawal_info->GetChainWithdrawalInfo();
+     
+        //待测试
         $deposit_info_history = new DepositHistoryModel();
         $deposit_info_history->OnTimer($chain_deposit_array);
         
