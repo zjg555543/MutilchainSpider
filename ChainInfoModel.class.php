@@ -54,4 +54,20 @@ class ChainInfoModel extends Model{
         
         return $child_chain_array;
     }
+    
+    public function GetChangeValidatorInfo(){
+        $chain_obj_array = $this->select();
+        if($chain_obj_array == null){
+            return null;
+        }
+        $chain_change_validator_array = array();
+        foreach ($chain_obj_array as $index => $chain_info) {
+            $chain_dynamic_ojb = json_decode($chain_info["chain_dynamic_info"]);
+            if($chain_dynamic_ojb->validatorHistoryIndex > 0){
+                $chain_change_validator_array[$chain_dynamic_ojb->chain_id] = $chain_dynamic_ojb->validatorHistoryIndex;
+            }
+        }
+        
+        return $chain_change_validator_array;
+    }
 }

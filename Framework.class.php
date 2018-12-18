@@ -8,6 +8,7 @@ require_once 'ChainInfoModel.class.php';
 require_once 'BlockInfoModel.class.php';
 require_once 'DepositInfoModel.class.php';
 require_once 'DepositHistoryModel.class.php';
+require_once 'ChangeValidatorHistoryModel.class.php';
 
 class Framework{
     public function Run(){
@@ -28,6 +29,11 @@ class Framework{
      
         $deposit_info_history = new DepositHistoryModel();
         $deposit_info_history->OnTimer($chain_deposit_array);
+        
+        $chain_change_validator_array = $chain_info->GetChangeValidatorInfo();
+        $change_validator = new ChangeValidatorHistoryModel();
+        $change_validator->OnTimer($chain_change_validator_array);
+        
     }
 }
 

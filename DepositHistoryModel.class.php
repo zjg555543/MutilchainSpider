@@ -37,7 +37,6 @@ class DepositHistoryModel extends Model{
         $this->insert($data);
         
         //4.如果上一个仍不存在，则继续下一个循环
-        $pre_hash_obj = json_decode($result->result->$key->value);
         if(($chain_deposit_seq - 1) > 0){
             $this->updateDepositHistory($chain_id, ($chain_deposit_seq - 1));
         }
