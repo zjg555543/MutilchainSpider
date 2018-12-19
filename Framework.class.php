@@ -32,14 +32,12 @@ class Framework{
         $deposit_info_history = new DepositHistoryModel();
         $deposit_info_history->OnTimer($chain_deposit_array);
         
-        //待测试
         $withdrawal_info = new WithdrawalInfoModel();
         $withdrawal_info->OnTimer($chain_count);
         $chain_withdrawal_array = $withdrawal_info->GetChainWithdrawalInfo();
      
-        //待测试
-        $deposit_info_history = new DepositHistoryModel();
-        $deposit_info_history->OnTimer($chain_deposit_array);
+        $deposit_info_history = new WithdrawalHistoryModel();
+        $deposit_info_history->OnTimer($chain_withdrawal_array);
         
         $chain_change_validator_array = $chain_info->GetChangeValidatorInfo();
         $change_validator = new ChangeValidatorHistoryModel();

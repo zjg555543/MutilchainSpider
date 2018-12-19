@@ -19,7 +19,7 @@ class WithdrawalInfoModel extends Model{
         $chain_withdrawal_array = array();
         foreach ($withdrawal_obj_array as $index => $withdrawal_data) {
             $ojb = json_decode($withdrawal_data["chain_withdrawal_data"]);
-            $chain_withdrawal_array[$ojb->chain_id] = $ojb->seq;
+            $chain_withdrawal_array[$withdrawal_data["chain_id"]] = $ojb->seq;
         }
         
         return $chain_withdrawal_array;
