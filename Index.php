@@ -1,16 +1,16 @@
 <?php
 require_once 'Framework.class.php';
 
-ini_set('max_execution_time','3600');
+ini_set('max_execution_time','2592000');
 
-function DoRun(){
-    $model = new Framework();
-    echo 'Runing..<br>';
-    $model->Run();
-}
-
-DoRun();
-exit;
+//function DoRun(){
+//    $model = new Framework();
+//    echo 'Runing..<br>';
+//    $model->Run();
+//}
+//
+//DoRun();
+//exit;
 
 ignore_user_abort(true);
 set_time_limit(0);
