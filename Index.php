@@ -3,11 +3,11 @@ require_once 'Framework.class.php';
 
 ini_set('max_execution_time','2592000');
 
-//function DoRun(){
-//    $model = new Framework();
-//    echo 'Runing..<br>';
-//    $model->Run();
-//}
+function DoRun(){
+    $model = new Framework();
+    echo 'Runing..<br>';
+    $model->Run();
+}
 //
 //DoRun();
 //exit;
