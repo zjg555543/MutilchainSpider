@@ -15,7 +15,7 @@ function DoRun(){
 ignore_user_abort(true);
 set_time_limit(0);
 
-$interval = 15;
+$interval = 10;
 $run_file = dirname(__FILE__).DIRECTORY_SEPARATOR.'running';
 if(file_exists($run_file)) {
     echo 'Already running...'.'<br>';
