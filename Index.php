@@ -1,35 +1,18 @@
 <?php
 require_once 'Framework.class.php';
+date_default_timezone_set('Asia/Shanghai');
 
-ini_set('max_execution_time','2592000');
-
-function DoRun(){
-    $model = new Framework();
-    echo 'Runing..<br>';
-    $model->Run();
+function MY_LOG($content){
+    $file  = 'mutilchain-spider.log';
+    $now_time = date("Y-m-d H:i:s");
+    $content = $now_time."  ".$content."\n";
+    file_put_contents($file, $content,FILE_APPEND);
+    echo $content;
 }
-//
-//DoRun();
-//exit;
-
-ignore_user_abort(true);
-set_time_limit(0);
-
-$interval = 10;
-$run_file = dirname(__FILE__).DIRECTORY_SEPARATOR.'running';
-if(file_exists($run_file)) {
-    echo 'Already running...'.'<br>';
-    exit();
-}
-
-file_put_contents($run_file, 'Runing');
 
 do {
-    sleep($interval); 
-    if(!file_exists($run_file)) {
-        echo 'Exit ok.'.'<br>';
-        exit();
-    }
-    DoRun();
-    
+    MY_LOG('Running... ');
+    sleep(10); 
+    $model = new Framework();
+    $model->Run();
 } while(true);
