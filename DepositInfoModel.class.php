@@ -19,7 +19,7 @@ class DepositInfoModel extends Model{
         $chain_deposit_array = array();
         foreach ($deposit_obj_array as $index => $deposit_data) {
             $ojb = json_decode($deposit_data["chain_deposit_data"]);
-            $chain_deposit_array[$ojb->chain_id] = $ojb->seq;
+            $chain_deposit_array[$deposit_data["chain_id"]] = $ojb->seq;
         }
         
         return $chain_deposit_array;
