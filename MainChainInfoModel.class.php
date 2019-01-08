@@ -23,15 +23,19 @@ class MainChainInfoModel extends Model{
         if($result->error_code != 0){
             return FALSE;
         }
-        
-        $this->del(1);
 
         $data["id"] = 1;
         $data["contract_address"] = $GLOBALS['config']['chain_server']['cmc_address'];
         $data["contract_code"] = 'hello, contract..';
         $data["child_chain_count"] = $result->result->childChainCount->value;
         
-        $this->insert($data);
+        if($this->find(1) != null){
+            $this->update($data);
+        }
+        else{
+            $this->insert($data);
+        }
+        
         return;
     }
     
