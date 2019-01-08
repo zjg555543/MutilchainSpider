@@ -21,15 +21,20 @@ class ChainInfoModel extends Model{
                 die('Canot find childChainid_info_.');
                 return FALSE;
             }
-             $this->del($i);
             
             $childChainid_info_filed = 'childChainid_info_'.$i;
             $chain_dynamic_info = $result_dymaic->result->$childChainid_info_filed->value;
-            
+           
             $data['chain_id'] = $i;
             $data['chain_create_info'] = $chain_create_info;
             $data['chain_dynamic_info'] = $chain_dynamic_info;
-            $this->insert($data);
+             
+            if($this->find($i) != null){
+                $this->update($data);
+            }
+            else{
+                $this->insert($data);
+            }
         }
         echo ('Update ChainInfoModel OK<br>');
         return TRUE;

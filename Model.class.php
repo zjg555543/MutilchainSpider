@@ -24,7 +24,7 @@ abstract class Model {
 
     //获取当前操作的表名
     private function getTable() {
-        return substr(get_class($this), 0, -5);
+        return strtolower(substr(get_class($this), 0, -5));
     }
 
     //获取主键字段
