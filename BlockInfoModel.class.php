@@ -27,7 +27,6 @@ class BlockInfoModel extends Model{
         $key = "childChainBlock_{$chain_id}_{$leder_hash}";
         $result = $this->getHttpResult($key);
         if($result->error_code != 0){
-            die("Canot find {$key}");
             return FALSE;
         }
         $result->result->$key->value;

@@ -27,7 +27,6 @@ class DepositHistoryModel extends Model{
         $key = "deposit_{$chain_id}_{$chain_deposit_seq}";
         $result = $this->getHttpResult($key);
         if($result->error_code != 0){
-            die("Canot find {$key}");
             return FALSE;
         }
         $result->result->$key->value;

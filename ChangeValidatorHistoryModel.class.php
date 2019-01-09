@@ -28,7 +28,6 @@ class ChangeValidatorHistoryModel extends Model{
         $key = "childChainValidatorHistory_{$chain_id}_{$change_index}";
         $result = $this->getHttpResult($key);
         if($result->error_code != 0){
-            die("Canot find {$key}");
             return FALSE;
         }
         $result->result->$key->value;

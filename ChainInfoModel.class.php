@@ -10,7 +10,6 @@ class ChainInfoModel extends Model{
         for($i = 1; $i <= $chain_count; $i++){
             $result = $this->getHttpResult('childChainid_'.$i);
             if($result->error_code != 0){
-                die('Canot find childChainid_.');
                 return FALSE;
             }
             $childChainidFiled = 'childChainid_'.$i;
@@ -18,7 +17,6 @@ class ChainInfoModel extends Model{
          
             $result_dymaic = $this->getHttpResult('childChainid_info_'.$i);
             if($result_dymaic->error_code != 0){
-                die('Canot find childChainid_info_.');
                 return FALSE;
             }
             
