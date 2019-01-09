@@ -18,9 +18,17 @@ class WithdrawalHistoryModel extends Model{
         //1.查询历史记录中是否存在
         $sql = "select * from withdrawalhistory where chain_id={$chain_id} and seq=$chain_withdrawal_seq";
         $row = $this->db->fetchRow($sql);
-        //2.如果已经存在，则不处理
+        //2.如果已经存在
         if($row != null){
-            return;
+            $withdrawal_data = $row['withdrawal_data'];
+            $json_result = json_decode($withdrawal_data, true);
+            //var_dump($json_result);
+            //如果状态已经改变，则不处理
+            if($json_result['state'] != 1){
+                return;
+            }
+            //如果当前尚未改变，删除后，重新查询
+            $this->del($row['id']);
         }
         
         //3.如果不存在则请求服务器，并插入
