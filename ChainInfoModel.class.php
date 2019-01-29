@@ -107,10 +107,11 @@ class ChainInfoModel extends Model{
     }
 
     private function checkValidChildChain($chain_id){
-        if($chain_id == 1 || $chain_id == 2 || $chain_id == 3){
-            return true;
-        }
-
-        return false;
+        return true;
+//        if($chain_id == 1 || $chain_id == 2 || $chain_id == 3){
+//            return true;
+//        }
+//
+//        return false;
     }
 }
