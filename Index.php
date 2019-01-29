@@ -10,9 +10,9 @@ function MY_LOG($content){
     echo $content;
 }
 
-//do {
-   // MY_LOG('Running... ');
-   // sleep(10); 
+do {
+    MY_LOG('Running... ');
+    sleep(10); 
     $model = new Framework();
     $model->Run();
-//} while(true);
+} while(true);
