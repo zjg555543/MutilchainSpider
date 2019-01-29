@@ -160,4 +160,15 @@ abstract class Model {
         //echo $html;
         return json_decode($html);
     }
+    
+    public function getMainChainLedger(){
+        $url = 'http://'.$GLOBALS['config']['chain_server']['ip_port'].'/getLedger';
+        $html = file_get_contents($url);
+        if($html == FALSE){
+            $result = json_decode('{"error_code": 10000}');
+            return $result;
+        }
+        //echo $html;
+        return json_decode($html);
+    }
 }
